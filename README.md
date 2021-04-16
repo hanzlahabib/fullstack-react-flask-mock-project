@@ -14,15 +14,21 @@ It runs these commands in concurrent mode
 `"npm:flask-run"  "npm:start"`
 
 full command in package.json 
-`"start:all": "concurrently  \"npm:flask-run\" \"npm:start",`
+```
+  "scripts": {
+    "start:all": "concurrently  \"npm:flask-run\" \"npm:start",
+    "flask-run": "cd api && python -m venv venv && cd venv/Scripts && activate && cd ../../ && pip install -r requirements.txt && flask setup && flask loadcsv && flask run"
+    "start": "react-scripts start",
+  }
+```
 
 `npm:flask-run`
 
-This command will initialize virtualenv in `api` folder which is on root and then activate this env
-after activating it will install all required packages from requirement.txt file which is in api folder
+This command will initialize virtualenv in `api` folder which is at root directory and activate venv environment
+after activating it will execute command to install all required packages from requirement.txt file which is in api folder
 
 after successfully installing packages 
-`flask setup && flask loadcsv` commands will run, 
+`flask setup && flask loadcsv` commands will be executed, 
 these command will drop previous tables if available and create new tables from schema, and load data from csv which are available in api/static directory 
 
 after successfully loading everything `flask run` will be executed to run flask server at 5000 port
